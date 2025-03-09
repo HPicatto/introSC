@@ -1,0 +1,59 @@
+[project]
+authors = ["Hernan Picatto <hernan.picatto@ascii.ac.at>"]
+
+channels = [
+  { channel = "rapidsai", priority = 3 },
+  { channel = "conda-forge", priority = 2 },
+  { channel = "pytorch", priority = 1 },
+  {channel = "conda-forge", priority = 1},
+]
+name = "IntroSC"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[dependencies]
+python = ">=3.11, <3.12"
+pip = ">=24.2"
+
+[environments]
+lint = { features = [
+  "research-cpu",
+  "typings",
+], solve-group = "default" }
+research-cpu = { features = [
+  "research-cpu",
+  "research-basics",
+], solve-group = "default" }
+
+[feature.typings.pypi-dependencies]
+[feature.research-cpu.dependencies]
+[feature.research-cpu.pypi-dependencies]
+[feature.research-basics.dependencies]
+sphinx-rtd-theme= "~=3.0"
+pytest = ">=8.3.3,<9"
+pytest-mock = ">=3.14.0,<4"
+pytest-cov = ">=5.0.0,<6"
+ruff = ">=0.5.7,<1"
+yamllint = ">=1.35.1,<2"
+taplo = ">=0.9.3,<0.10"
+nodejs = ">=20.8.1,<23"
+nbqa = "~=1.9.0"
+pyright = "~=1.1.388"
+
+[tasks]
+create_environment = { cmd = "pixi install -e research-cpu --locked && pixi run -e research-cpu postinstall", description = "research cpu environment" }
+clean_all_environments = { cmd = "rm -rf .pixi/envs" }
+notebook_cpu = { cmd = "pixi run -e research-cpu --frozen jupyter lab" }
+
+[tasks.clean_notebooks]
+cmd = ["sh", "../../scripts/clean_notebooks.sh"]
+cwd = "./src/notebooks"
+description = "Clear outputs from all Jupyter notebooks in the research folder"
+
+[tasks.fmt_unsafe]
+cmd = "nbqa 'ruff format' src/* && ruff format ./src && nbqa ruff --fix --unsafe-fixes ./src/* && ruff check --fix --unsafe-fixes ./src/ && yamllint -c yamllintconfig.yaml . && taplo fmt"
+description = "Format python files - apply automatic ruff unsafe fixes"
+
+[tasks.lint]
+cmd = "ruff check ./src/pipelines && yamllint -c yamllintconfig.yaml . && taplo check && pyright"
+description = "Validate formatting and type check python files"
