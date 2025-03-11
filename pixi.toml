@@ -12,24 +12,21 @@ platforms = ["linux-64"]
 version = "0.1.0"
 
 [dependencies]
-python = ">=3.11, <3.12"
+python = "~=3.13"
 pip = ">=24.2"
+nodejs = ">=20.8.1,<23"
 
 [environments]
 lint = { features = [
-  "research-cpu",
+  "research-intro-sc",
   "typings",
 ], solve-group = "default" }
-research-cpu = { features = [
-  "research-cpu",
+research-intro-sc = { features = [
+  "research-intro-sc",
   "research-basics",
 ], solve-group = "default" }
 
 [feature.typings.pypi-dependencies]
-[feature.research-cpu.dependencies]
-[feature.research-cpu.pypi-dependencies]
-[feature.research-basics.dependencies]
-sphinx-rtd-theme= "~=3.0"
 pytest = ">=8.3.3,<9"
 pytest-mock = ">=3.14.0,<4"
 pytest-cov = ">=5.0.0,<6"
@@ -40,10 +37,22 @@ nodejs = ">=20.8.1,<23"
 nbqa = "~=1.9.0"
 pyright = "~=1.1.388"
 
+[feature.research-intro-sc.dependencies]
+[feature.research-intro-sc.pypi-dependencies]
+pybind11= "~=2.13"
+sphinx-rtd-theme= "~=3.0"
+jupyter= "~=1.1"
+numpy= "~=2.2"
+scipy= "~=1.15"
+matplotlib= "~=3.10"
+ngsolve= "~=6.2"
+
+[feature.research-basics.dependencies]
+
 [tasks]
-create_environment = { cmd = "pixi install -e research-cpu --locked && pixi run -e research-cpu postinstall", description = "research cpu environment" }
+create_environment = { cmd = "pixi install -e research-intro-sc --locked && pixi run -e research-intro-sc postinstall", description = "research intro-sc environment" }
 clean_all_environments = { cmd = "rm -rf .pixi/envs" }
-notebook_cpu = { cmd = "pixi run -e research-cpu --frozen jupyter lab" }
+notebook_intro_sc = { cmd = "pixi run -e research-intro-sc --frozen jupyter lab" }
 
 [tasks.clean_notebooks]
 cmd = ["sh", "../../scripts/clean_notebooks.sh"]
