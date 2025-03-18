@@ -2,9 +2,6 @@
 authors = ["Hernan Picatto <hernan.picatto@ascii.ac.at>"]
 
 channels = [
-  { channel = "rapidsai", priority = 3 },
-  { channel = "conda-forge", priority = 2 },
-  { channel = "pytorch", priority = 1 },
   {channel = "conda-forge", priority = 1},
 ]
 name = "IntroSC"
@@ -14,7 +11,6 @@ version = "0.1.0"
 [dependencies]
 python = "~=3.13"
 pip = ">=24.2"
-nodejs = ">=20.8.1,<23"
 
 [environments]
 lint = { features = [
@@ -33,11 +29,12 @@ pytest-cov = ">=5.0.0,<6"
 ruff = ">=0.5.7,<1"
 yamllint = ">=1.35.1,<2"
 taplo = ">=0.9.3,<0.10"
-nodejs = ">=20.8.1,<23"
 nbqa = "~=1.9.0"
 pyright = "~=1.1.388"
 
 [feature.research-intro-sc.dependencies]
+nodejs = ">=20.8.1,<23"
+
 [feature.research-intro-sc.pypi-dependencies]
 pybind11= "~=2.13"
 sphinx-rtd-theme= "~=3.0"
@@ -46,6 +43,7 @@ numpy= "~=2.2"
 scipy= "~=1.15"
 matplotlib= "~=3.10"
 ngsolve= "~=6.2"
+simpy= "~=4.1"
 
 [feature.research-basics.dependencies]
 
