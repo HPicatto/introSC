@@ -51,7 +51,7 @@ ngsolve= "~=6.2"
 [tasks]
 create_environment = { cmd = "pixi install -e research-intro-sc --locked && pixi run -e research-intro-sc postinstall", description = "research intro-sc environment" }
 clean_all_environments = { cmd = "rm -rf .pixi/envs" }
-notebook_intro_sc = { cmd = "pixi run -e research-intro-sc --frozen jupyter lab" }
+notebook_intro_sc = { cmd = "pixi run -e research-intro-sc --frozen jupyter lab --port 4548" }
 
 [tasks.clean_notebooks]
 cmd = ["sh", "../../scripts/clean_notebooks.sh"]
